@@ -1,0 +1,41 @@
+# 🔐 EC2 접속 키 파일
+springboot-key.pem
+
+# 💡 Gradle 관련
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# 💻 IDE 설정 파일
+.idea
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings
+bin/
+out/
+
+# 📦 STS / NetBeans 등
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ❗ 테스트/서브폴더 안의 빌드 결과물 제외
+!**/src/main/**/build/
+!**/src/main/**/bin/
+!**/src/main/**/out/
+!**/src/test/**/build/
+!**/src/test/**/bin/
+!**/src/test/**/out/
+
+# 도우미 파일
+HELP.md
