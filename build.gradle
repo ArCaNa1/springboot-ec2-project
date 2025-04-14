@@ -20,11 +20,11 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA Starter
 	implementation 'org.springframework.boot:spring-boot-starter-web'  // Web Starter
-	implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security
 	implementation 'org.projectlombok:lombok:1.18.24' // Lombok
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt:0.12.3'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'//JavaMailSender
+
+
 
 	runtimeOnly 'com.mysql:mysql-connector-j'  // MySQL Connector
 
