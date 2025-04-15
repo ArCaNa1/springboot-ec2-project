@@ -7,6 +7,8 @@ import com.example.myapp.Membership.util.JwtTokenProvider;
 import com.example.myapp.Membership.entity.User;
 import com.example.myapp.Membership.repository.UserRepository;
 import com.example.myapp.Membership.util.PasswordUtil;
+import com.example.myapp.Membership.util.TierUtil;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,11 +20,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final TeamMemberRepository teamMemberRepository;
+    private final SolvedAcService solvedAcService;
 
-    public UserService(UserRepository userRepository, EmailService emailService, TeamMemberRepository teamMemberRepository) {
+
+
+    public UserService(UserRepository userRepository, EmailService emailService, TeamMemberRepository teamMemberRepository,SolvedAcService solvedAcService ) {
         this.userRepository = userRepository;
         this.emailService = emailService;
         this.teamMemberRepository = teamMemberRepository;
+        this.solvedAcService = solvedAcService;
+
+
     }
 
 
@@ -39,12 +47,15 @@ public class UserService {
         // SHA-256 해싱 적용
         String hashedPassword = PasswordUtil.hashPassword(request.getPassword());
 
+        int tier = solvedAcService.fetchTier(request.getUserId());
+
+
         User user = new User(
                 request.getUserId(),
                 hashedPassword,
                 request.getNickname(),
                 request.getEmail(),
-                "UNRANKED"  // 기본 티어 설정
+                TierUtil.convertTier(tier)
         );
 
         return userRepository.save(user);
@@ -133,5 +144,6 @@ public class UserService {
         );
 
     }
+
 
 }
