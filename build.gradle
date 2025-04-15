@@ -22,9 +22,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'  // Web Starter
 	implementation 'org.projectlombok:lombok:1.18.24' // Lombok
 	implementation 'io.jsonwebtoken:jjwt:0.12.3'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'//JavaMailSender
-
-
+	implementation 'org.springframework.boot:spring-boot-starter-mail'// JavaMailSender
 
 	runtimeOnly 'com.mysql:mysql-connector-j'  // MySQL Connector
 
@@ -32,11 +30,15 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-	// Spring Boot Test 의존성 (JUnit 5 포함)
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'  // Test Starter (JUnit 5 포함)
+	// Spring Boot Test 의존성 (JUnit 5, Mockito 포함)
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 
+
+	// Mockito 의존성
+	testImplementation "org.mockito:mockito-core:5.11.0"
 }
 
 tasks.named('test') {
-	useJUnitPlatform()  // JUnit Platform을 사용하도록 설정
+	useJUnitPlatform()
 }

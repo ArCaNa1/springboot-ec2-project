@@ -1,9 +1,6 @@
 package com.example.myapp.Membership.controller;
 
-import com.example.myapp.Membership.dto.LoginRequest;
-import com.example.myapp.Membership.dto.LoginResponse;
-import com.example.myapp.Membership.dto.RegisterRequest;
-import com.example.myapp.Membership.dto.RegisterResponse;
+import com.example.myapp.Membership.dto.*;
 import com.example.myapp.Membership.entity.User;
 import com.example.myapp.Membership.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -71,36 +68,26 @@ public class AuthController {
 
     //아이디 찾기 엔드포인트
     @PostMapping("/find-id")
-    public ResponseEntity<?> findUserId(@RequestBody Map<String, String> request) {
-        String email = request.get("email");
-        if (email == null || email.isBlank()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("message", "이메일을 입력해주세요."));
-        }
-
-        User user = userService.findUserIdByEmail(email);
-        if(user == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("message", "해당 이메일에 해당하는 아이디가 없습니다."));
-        }
-        return ResponseEntity.ok(Map.of("userId", user.getUserId()));
+    public ResponseEntity<FindIdResponse> findUserId(@RequestBody FindIdRequest request) {
+        FindIdResponse response = userService.findUserIdByEmail(request);
+        return ResponseEntity.ok(response);
     }
 
     //비밀번호 찾기 엔드포인트
     @PostMapping("/find-password")
-    public ResponseEntity<?> findPassword(@RequestBody Map<String, String> request){
-        String userId = request.get("userId");
-        String email = request.get("email");
-        
-        try{
-            userService.resetPasswordAndSendEmail(userId, email);
-            return ResponseEntity.ok(Map.of("success", true));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("success", false, "message", e.getMessage()));
-        }
-        
+    public ResponseEntity<?> findPassword(@RequestBody FindPasswordRequest request) {
+        userService.resetPasswordAndSendEmail(request);
+        return ResponseEntity.ok(Map.of("success", true));
+    }
+
+    //로그아웃 엔드포인트
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout()
+    {
+        return ResponseEntity.ok(Map.of("message", "로그아웃됐습니다."));
+
     }
 
 
 }
+
