@@ -44,7 +44,7 @@ public class UserService {
             throw new IllegalStateException("이미 존재하는 이메일입니다.");
         }
 
-        // SHA-256 해싱 적용
+        // SHA256 해싱 적용
         String hashedPassword = PasswordUtil.hashPassword(request.getPassword());
 
         int tier = solvedAcService.fetchTier(request.getUserId());
