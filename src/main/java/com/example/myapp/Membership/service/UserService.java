@@ -8,7 +8,6 @@ import com.example.myapp.Membership.entity.User;
 import com.example.myapp.Membership.repository.UserRepository;
 import com.example.myapp.Membership.util.PasswordUtil;
 import com.example.myapp.Membership.util.TierUtil;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
