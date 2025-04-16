@@ -3,12 +3,15 @@ package com.example.myapp.Membership.controller;
 import com.example.myapp.Membership.dto.*;
 import com.example.myapp.Membership.entity.User;
 import com.example.myapp.Membership.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Slf4j
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/auth")
@@ -22,7 +25,7 @@ public class AuthController {
 
 
     //회원가입 엔드포인트
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
         try {
             User user = userService.register(request);
@@ -43,11 +46,19 @@ public class AuthController {
     }
 
 
-    //아이디 중복 엔드포인트
+    // 아이디 중복 엔드포인트
     @GetMapping("/check-id/{userId}")
-    public ResponseEntity<?> checkUserIdDuplicate(@PathVariable String userId) {
-        boolean isDuplicate = userService.isUserIdDuplicate(userId);
-        return ResponseEntity.ok(Map.of("isDuplicate", isDuplicate));
+    public ResponseEntity<?> checkUserIdDuplicate(@PathVariable("userId") String userId) {
+        try {
+            boolean isDuplicate = userService.isUserIdDuplicate(userId);
+            CheckUserIdResponse response = new CheckUserIdResponse(isDuplicate);
+            return ResponseEntity.ok(response);  // CheckUserIdResponse 객체를 반환
+        } catch (Exception e) {
+            log.error("Error checking user ID: ", e);
+            // 예외 발생 시에도 CheckUserIdResponse 형태로 반환
+            CheckUserIdResponse response = new CheckUserIdResponse(false); // 기본값 false로 설정
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 오류 시에도 CheckUserIdResponse 반환
+        }
     }
 
     //로그인 엔드포인트

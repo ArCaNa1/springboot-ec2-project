@@ -8,12 +8,13 @@ import com.example.myapp.Membership.entity.User;
 import com.example.myapp.Membership.repository.UserRepository;
 import com.example.myapp.Membership.util.PasswordUtil;
 import com.example.myapp.Membership.util.TierUtil;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.Random;
 
+import java.util.Random;
+@Slf4j
 @Service
 public class UserService {
 
@@ -47,23 +48,29 @@ public class UserService {
         // SHA256 해싱 적용
         String hashedPassword = PasswordUtil.hashPassword(request.getPassword());
 
-        int tier = solvedAcService.fetchTier(request.getUserId());
 
+        String tier = "Bronze"; // 테스트니까 하드코딩 가능
 
         User user = new User(
                 request.getUserId(),
-                hashedPassword,
                 request.getNickname(),
                 request.getEmail(),
-                TierUtil.convertTier(tier)
+                hashedPassword,
+                tier
         );
 
         return userRepository.save(user);
     }
 
-    //아이디 중복 로직
+    // 아이디 중복 로직
     public boolean isUserIdDuplicate(String userId) {
-        return userRepository.existsByUserId(userId);
+        try {
+            return userRepository.existsByUserId(userId);  // 예시: 유저 존재 여부 체크
+        } catch (Exception e) {
+            // 로그로 예외를 찍어서 문제 추적
+            log.error("Error checking duplicate user ID: ", e);
+            throw new RuntimeException("Database error occurred");
+        }
     }
 
 
@@ -128,21 +135,20 @@ public class UserService {
 
 
     //유저정보조회 로직
-    public UserInfoResponse getUserInfo(String userId){
+    public UserInfoResponse getUserInfo(String userId) {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저 입니다."));
-
 
         Optional<TeamMember> teamMember = teamMemberRepository.findByUser_UserId(userId);
         Integer teamId = teamMember.map(tm -> tm.getTeam().getTeamId()).orElse(null);
 
+        // UserInfoResponse 객체 생성
         return new UserInfoResponse(
                 user.getNickname(),
                 user.getEmail(),
                 user.getTier(),
                 teamId
         );
-
     }
 
 

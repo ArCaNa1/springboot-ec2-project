@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class JwtTokenProvider {
     public class SecretKey{
-        public static String JWT_SECRT_KEY = "goormwebidprojectfirst"; //임의로 짠 키
+        public static String JWT_SECRT_KEY = "mysupersecureandlongenoughsecretkeyandwith123456"; //임의로 짠 키
     }
 
     

@@ -2,6 +2,7 @@ package com.example.myapp.Membership.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Table(name = "user")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 public class User{
 
@@ -16,7 +18,7 @@ public class User{
     @Column(name = "user_id", length = 10)
     private String userId;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 100)
     private String nickname;
 
     @Column(nullable = false, unique = true, length = 100)
