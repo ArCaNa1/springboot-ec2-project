@@ -1,12 +1,18 @@
 package com.example.myapp.Membership.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
+import java.util.ArrayList;
+
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "user")
 @Getter
 @Setter
@@ -29,6 +35,11 @@ public class User{
 
     @Column(length = 20)
     private String tier;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<TeamMember> teamMemberships = new ArrayList<>();
 
 
     public User() {}
