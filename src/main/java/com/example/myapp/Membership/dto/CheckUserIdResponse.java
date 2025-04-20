@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CheckUserIdResponse {
-    private boolean isDuplicate;
+    private boolean is_duplicate;
 
 }
