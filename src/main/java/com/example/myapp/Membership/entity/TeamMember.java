@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+<<<<<<< Updated upstream
+=======
+@Table(name = "teammember")
+>>>>>>> Stashed changes
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,6 +20,7 @@ public class TeamMember {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< Updated upstream
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,5 +33,16 @@ public class TeamMember {
     @JsonIgnore
     private Team team;
 
+=======
+    private Integer memberId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id", nullable = false)
+    private Team teamId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User userId;
+>>>>>>> Stashed changes
 }
 

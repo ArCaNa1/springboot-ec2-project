@@ -4,7 +4,6 @@ import com.example.myapp.Membership.dto.*;
 import com.example.myapp.Membership.entity.User;
 import com.example.myapp.Membership.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

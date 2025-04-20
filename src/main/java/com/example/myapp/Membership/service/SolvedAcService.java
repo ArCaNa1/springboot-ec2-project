@@ -1,6 +1,5 @@
 package com.example.myapp.Membership.service;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
