@@ -1,38 +1,25 @@
 package com.example.myapp.Membership.entity;
 
-<<<<<<< Updated upstream
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import java.util.List;
-import java.util.ArrayList;
-
-
-@Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "user")
-=======
 import com.example.myapp.IDE.entity.Chat;
 import com.example.myapp.IDE.entity.Quest;
 import com.example.myapp.IDE.entity.Submission;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
->>>>>>> Stashed changes
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "user")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
 public class User {
 
     @Id
@@ -51,18 +38,12 @@ public class User {
     @Column(name = "tier", length = 20)
     private String tier;
 
-    @Column(name = "last_tier_updated_at") // 이 부분이 중요
+    @Column(name = "last_tier_updated_at")
     private Date lastTierUpdatedAt;
 
-<<<<<<< Updated upstream
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<TeamMember> teamMemberships = new ArrayList<>();
-
-
-    public User() {}
-=======
->>>>>>> Stashed changes
 
     @OneToMany(mappedBy = "leaderId")
     private List<Team> ledTeams;
@@ -70,11 +51,11 @@ public class User {
     @OneToMany(mappedBy = "userId")
     private List<TeamMember> teamMembers;
 
-    @OneToMany(mappedBy = "creatorId")
-    private List<Quest> createdQuests;
-
     @OneToMany(mappedBy = "userId")
     private List<Submission> submissions;
+
+    @OneToMany(mappedBy = "creatorId")
+    private List<Quest> createdQuests;
 
     @OneToMany(mappedBy = "userId")
     private List<Chat> chats;
